@@ -1,0 +1,7 @@
+.large-spacing .slider_main_block .site-slider__title,
+.extralarge-spacing .slider_main_block .site-slider__title,
+.large-text .slider_main_block .site-slider__title,
+.lovision .slider_main_block .site-slider__title  {
+        background-color: tomato;
+        max-width: 823px;
+     }
