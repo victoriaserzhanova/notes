@@ -3,30 +3,17 @@ import { btnColors, btnSize, isActive, isDisabled } from '../types/btnType';
 
 @Component({
   selector: 'app-button',
-  template: `
-    <button class="btn"
-    [ngClass]="[color]"
-    [class.defaultSize]='size === "defaultSize"'
-    [class.small]='size === "small"'
-    [class.large]='size === "large"'
-    >
-    {{btnText}}
-    </button>
-    <input (input)="handle($event)">
-    <span>InputHandler value:{{value}}</span>
-
-    <input (input)="0" #inputS>
-    <span>InputS value:{{inputS.value}}</span>
-
-    <input (input)="handleInput(inputL.value)" #inputL>
-    <span>handleInput:{{values}}</span>
-
-    <button (click)="onClickMe()">Click me!</button>
-    {{clickMessage}}
+  template: ` 
+  <button [class.accent]='color'> class binding</button>  
+  <button [ngClass]="[stylesObject]"> ngClass</button>  
+  <button [ngStyle]="{ 'background-color': 'green'}"> ngStyle</button>
+  <button [ngStyle]="isCompact ? styles.activeClass : styles.defaultClass" > ngStyle</button>
+  <button class="btn" class="{{btnClass}}" [style.width.px]="btnWidth"> {{btnText}} </button>
+  <button class="btn" [class.accent]='isActive' [style.font-size]="'25px'"> click</button>
    
   `,
   styles: [`
-  .btn{ border-radius: 10px; border: 1px solid #0099ff; color: #ffffff}
+  .btn{ border-radius: 10px; border: 1px solid #0099ff; color: #ffffff; background-color: #a4ca3e}
   .btn:not(.active):not(.button-disabled):hover {
     cursor: pointer;
   }
@@ -55,11 +42,34 @@ export class ButtonComponent implements OnInit {
   @Input() btnText = 'Click me';
   @Input() color: btnColors='default';
   @Input() size: btnSize='defaultSize';
-  @Input() isActive: isActive=false
+  @Input() isActive: isActive=false;
   @Input() isDisabled: isDisabled=false;
+  @Input() isCompact = false;
+  @Input() isFilled = false;
+  public stylesObject = {
+    'list_compact': this.isCompact,
+    'list_filled': this.isFilled,
+    'list_active': this.isActive,
+
+  }
+  public styles = {
+    defaultClass: {
+      'background-color': 'orange',
+    },
+    activeClass: {
+      'background-color': 'red',
+    }   
+  };
+
+  btnClass = this.isActive ? 'accent' : 'default';
+
+  get btnWidth(): number{
+    return 140;
+  }
   public values: string;
   public value: string;
   clickMessage = '';
+
   onClickMe() {
     this.clickMessage = 'You are my hero!';
   }
@@ -80,5 +90,48 @@ handleInput(value: any) {
 
 }
 
+// <button class="btn" [ngClass] ="isCompact ? styles.activeClass  : styles.defaultClass"> ngClass</button>
+
+// <button class="btn"
+//     [ngClass]="[color]"
+//     [class.defaultSize]='size === "defaultSize"'
+//     [class.small]='size === "small"'
+//     [class.large]='size === "large"'
+//     >
+//     {{btnText}}
+//     </button>
+
+//     <input (input)="handle($event)">
+//     <span>InputHandler value:{{value}}</span>
+
+//     <input (input)="0" #inputS>
+//     <span>InputS value:{{inputS.value}}</span>
+
+//     <input (input)="handleInput(inputL.value)" #inputL>
+//     <span>handleInput:{{values}}</span>
+
+//     <button (click)="onClickMe()">Click me!</button>
+//     {{clickMessage}}
+
+<div style="padding: 24px;" >
+  <!-- <h1>UIKIT</h1>
+  <h2>Small size</h2>
+  <div style="display: flex; justify-content: space-between; width: 300px;">
+    <app-button btnText='Default' size='small'></app-button>
+    <app-button btnText='Primary' color='primary' size='small'></app-button>
+    <app-button btnText='Accent' color='accent' size='small'></app-button>
+  </div>
+
+  <h2>Default size</h2>
+  <div style="display: flex; justify-content: space-between; width: 300px;">
+    <app-button btnText='Default'></app-button>
+    <app-button btnText='Primary' color='primary' ></app-button>
+    <app-button btnText='Accent' color='accent' ></app-button>
+  </div> -->
 
 
+  <div style="display: flex; justify-content: space-between;flex-wrap: wrap;width: 100%;">
+    <app-button></app-button>
+
+  </div>
+</div>
