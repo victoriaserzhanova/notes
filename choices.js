@@ -11,8 +11,15 @@
       </select>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-          const choicesBasic = new Choices('#choices-basic');
-    })
+          const choicesBasic = new Choices('#choices-basic', {
+            shouldSort: false,
+            searchEnabled: false,
+            duplicateItemsAllowed: false,
+            itemSelectText: '',
+            position: 'bottom',
+          });
+
+    });
   </script>
 .choices {
   width: 176px;
@@ -25,10 +32,28 @@
   border: none;
 }
 
-.is-open.is-flipped .choices__inner {
+.choices[data-type*=select-one] .choices__input {
+  border-bottom: none;
+}
+
+.is-open .choices__inner {
   border-radius: 10px;
   background-color: #ffffff;
   border: 1px solid #CCB26E;
+}
+
+.is-open .choices__list--dropdown {
+  border-radius: 0 0 10px 10px;
+  background-color: #ffffff;
+  border: 1px solid #CCB26E;
+}
+
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+  background-color: transparent;
+}
+
+.choices__input--cloned {
+  display: none;
 }
 
 
